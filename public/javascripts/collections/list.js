@@ -10,9 +10,9 @@ Task
 ) {
 
   var List = Backbone.Collection.extend({
-
+      
     model: Task,
-    url: '/tasks'
+    url: document.location.pathname + 'tasks'
     
  });
 

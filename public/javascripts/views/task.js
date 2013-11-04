@@ -34,8 +34,14 @@ taskTemplate
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
-      this.socket = io.connect();
-       var task = this;
+      var
+        pathComponents = document.location.pathname.split('/'),
+        // Strip last part
+        baseURL = pathComponents.slice(0,pathComponents.length-1).join('/') + '/',
+        resource = baseURL.substring(1) + "socket.io";
+        
+      this.socket = io.connect(null, { resource: resource });
+      var task = this;
       this.socket.on('task', function(data){
         if (task.model.id == data.id) {
            task.model.set({'content':data.content, 'is_completed':data.is_completed});
